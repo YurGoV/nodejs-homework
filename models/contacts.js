@@ -1,52 +1,31 @@
 const fs = require('fs/promises')
 
+const {Contacts} = require('../db/contactsModel')
+
 
 const listContacts = async () => {
-    try {
-        const result = await fs.readFile('./models/contacts.json', 'utf8');
-        return JSON.parse(result);
-    } catch (err) {
-        return err;
-    }
+    const data = await Contacts.find({})
+    return data
 }
 
 const listContactById = async (contactId) => {
-    try {
-        const result = await fs.readFile('./models/contacts.json', 'utf8')// todo: listContacts?
-        const data = JSON.parse(result);
-        return data.find(item => item.id === contactId);// todo: find?
-    } catch (err) {
-        return err;
-    }
+    const data = await Contacts.findById(contactId)
+    return data
 }
 
 const postContact = async (body) => {
-    try {
-        const oldContacts = await listContacts();
-        const newContacts = JSON.stringify([...oldContacts, body])
-        await fs.writeFile('./models/contacts.json', newContacts, 'utf-8')
-        return body
-    } catch (err) {
-        return err;
-    }
+    const contact = new Contacts(body);
+    await contact.save()
+    return body // todo: ??? what to return?
 }
 
 const removeContact = async (contactId) => {
-    try {
-        const oldContacts = await listContacts();
-        const isContact = oldContacts.find(item => item.id === contactId);// todo: find?
-        console.log('isContact: ', isContact);
-        if (isContact) {
-            const newContacts = JSON.stringify(oldContacts.filter(item => item.id !== contactId));
-            await fs.writeFile('./models/contacts.json', newContacts, 'utf-8')
-            return {"message": "contact deleted"};
-        }
-        ;
+    const contact = await Contacts.findByIdAndRemove(contactId)
+    // console.log('cc', contact);
+    if (!contact) {
         return {"message": "Not found"};
-
-    } catch (err) {
-        return err;
     }
+    return {"message": "contact deleted", "deleted contact": contact};
 }
 
 

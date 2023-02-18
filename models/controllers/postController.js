@@ -2,9 +2,11 @@ const {customAlphabet} = require('nanoid');
 const nanoid = customAlphabet('1234567890', 3)
 
 
+
+
 const {listContacts, listContactById, postContact, removeContact, updateContact} = require("../contacts");
 
-const getContacts = async (req, res, next) => {
+const getContacts = async (req, res) => {
     const contacts = await listContacts()
     res.status(200).json({contacts, status: 'success'})
 };
@@ -28,8 +30,6 @@ const addContact = async (req, res, next) => {
     }
 
     let contact = req.body
-    const id = nanoid(2).toString();
-    contact = {"id": id, ...contact}
     console.log(contact);
     const result = await postContact(contact);
     res.status(201).json({result})
@@ -38,14 +38,15 @@ const addContact = async (req, res, next) => {
 const deleteContact = async (req, res, next) => {
     const id = req.params.contactId;
     const deleteResult = await removeContact(id);
+    console.log(deleteResult);
     if (deleteResult.message === 'Not found') {
         return res.status(404).json(deleteResult)
     }
     ;
-    if (deleteResult.message === 'contact deleted') {
+    // if (deleteResult.message === 'contact deleted') {
         return res.status(200).json(deleteResult)
-    }
-    ;
+    // }
+    // ;
 }
 
 const putContact = async (req, res, next) => {
