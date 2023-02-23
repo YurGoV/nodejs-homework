@@ -26,19 +26,30 @@ Content-Type: application/json
 ###
 
 
-
-DELETE http://localhost:3000/api/contacts/63f0a4a7140b0014434ccb68
+DELETE http://localhost:3000/api/contacts/63f1f4f08baaefba8133abbf
 Accept: application/json
 ###
-GET http://localhost:3000/api/contacts/63f0a4a7140b0014434ccb68
+GET http://localhost:3000/api/contacts/63f1e79d4dc50cca4f43735b
 Accept: application/json
 ###
 
 
-PUT http://localhost:3000/api/contacts/2
+PUT http://localhost:3000/api/contacts/63f1e79d4dc50cca4f43735b
 Content-Type: application/json
 
 {
-  "phone": "+38067702270222"
+  "phone": "+380677491100",
+  "name": "joeї23"
 }
 ###
+GET http://localhost:3000/api/contacts/63f1e79d4dc50cca4f43735b
+Accept: application/json
+###
+
+
+PATCH http://localhost:3000/api/contacts/63f1e79d4dc50cca4f43735b/favorite
+Content-Type: application/json
+
+{
+  "favorite": "true"
+}

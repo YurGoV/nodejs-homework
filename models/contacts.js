@@ -14,9 +14,10 @@ const listContactById = async (contactId) => {
 }
 
 const postContact = async (body) => {
-    const contact = new Contacts(body);
-    await contact.save()
-    return body // todo: ??? what to return?
+    // const contact = new Contacts(body);
+    // const newContact = await contact.save()
+    return Contacts.create(body)
+    // return newContact // todo: ??? what to return?
 }
 
 const removeContact = async (contactId) => {
@@ -25,38 +26,28 @@ const removeContact = async (contactId) => {
     if (!contact) {
         return {"message": "Not found"};
     }
-    return {"message": "contact deleted", "deleted contact": contact};
+    return {"message": "contact deleted"};
 }
 
 
 const updateContact = async (contactId, body) => {
-    try {
-        const oldContacts = await listContacts();
-        const isContact = oldContacts.find(item => item.id === contactId);// todo: find?
-        console.log('isContact: ', isContact);
-        let newContact = null;
-        const newContacts = await oldContacts.map(contact => {
-            if (contact.id === contactId) {
-                newContact = {...contact, ...body};
-                return newContact
-            }
-            return contact
-        })
-
-        console.log(newContacts);
-
-        if (newContact) {
-            console.log('yahooo');
-            await fs.writeFile('./models/contacts.json', JSON.stringify(newContacts), 'utf-8')
-            return newContact;
-
-        } else {
-            return null
-        }
+    try {// todo add try/catch to other funcs
+        // const updatedContact = await Contacts.update({_id: contactId}, body);
+        return  Contacts.update({_id: contactId}, body);
+        // return updatedContact;
     } catch (err) {
         return err;
     }
+}
 
+const updateFavorite = async (contactId, body) => {
+    try {// todo add try/catch to other funcs
+        console.log(contactId, body);
+        return Contacts.update({_id: contactId}, body);
+        // return updatedFavoriteContact;
+    } catch (err) {
+        return err;
+    }
 }
 
 module.exports = {
@@ -65,4 +56,5 @@ module.exports = {
     postContact,
     removeContact,
     updateContact,
+    updateFavorite,
 }
