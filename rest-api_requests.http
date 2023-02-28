@@ -2,7 +2,7 @@ GET http://localhost:3000/api/contacts
 Accept: application/json
 ###
 
-GET http://localhost:3000/api/contacts/40
+GET http://localhost:3000/api/contacts/63efd6f0b529ebf6bc279e5f
 Accept: application/json
 ###
 
@@ -10,7 +10,7 @@ POST http://localhost:3000/api/contacts
 Content-Type: application/json
 
 {
-  "name": "joe",
+  "name": "joeNOWWW",
   "email": "eeemmmaaaiiilll",
   "phone": "11111116"
 }
@@ -19,29 +19,37 @@ POST http://localhost:3000/api/contacts
 Content-Type: application/json
 
 {
-  "name": "joeї111'",
+  "name": "joeNOWWW",
   "email": "examp@email.com",
   "phone": "+111111162222"
 }
 ###
 
-POST http://localhost:3000/api/contacts
+
+DELETE http://localhost:3000/api/contacts/63fd1f221db8f9921637e2ed
+Accept: application/json
+###
+GET http://localhost:3000/api/contacts/63fd1f221db8f9921637e2ed
+Accept: application/json
+###
+// todo: get by wrong id????
+
+###
+PATCH http://localhost:3000/api/contacts/63f1e79d4dc50cca4f43735b
 Content-Type: application/json
 
 {
-  "name": "joeї222'",
-  "email": "examp@email.com"
+  "phone": "+380677490000"
 }
 ###
-
-DELETE http://localhost:3000/api/contacts/19
+GET http://localhost:3000/api/contacts/63f1e79d4dc50cca4f43735b
 Accept: application/json
 ###
 
-PUT http://localhost:3000/api/contacts/76
+
+PATCH http://localhost:3000/api/contacts/63f1e79d4dc50cca4f43735b/favorite
 Content-Type: application/json
 
 {
-  "phone": "+981641103302"
+  "favorite": "true"
 }
-###
