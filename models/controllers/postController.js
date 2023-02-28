@@ -57,12 +57,6 @@ const patchContact = async (req, res, next) => {
 const updateFavoriteContact = async (req, res, next) => {
     const {contactId} = req.params;
     const body = req.body;
-    const {favorite} = body;
-
-    if (Object.keys(req.body).length === 0 || (!favorite)) {// todo: check is necessary
-        console.log('no body with favorite parameter');
-        return res.status(400).json({"message": "missing fields"})
-    }
 
     const favoriteContact = await updateFavorite(contactId, body)
     if (favoriteContact) {
