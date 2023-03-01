@@ -40,7 +40,6 @@ module.exports = {
         }
         next();
     },
-
     updateFavoriteValidation: (req, res, next) => {
         const validationResult = schemaFaforite.validate(req.body);
         if (validationResult.error) {

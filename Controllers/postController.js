@@ -5,7 +5,7 @@ const {
     removeContact,
     updateContact,
     updateFavorite,
-} = require("../contacts");
+} = require("../Services/contacts");
 
 const getContacts = async (req, res, next) => {
     const contacts = await listContacts()
