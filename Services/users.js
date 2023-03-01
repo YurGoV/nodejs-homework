@@ -29,12 +29,27 @@ const findValidUser = async (email, password) => {
             return null;
         }
         const isPassportValid = await bcrypt.compare(password, searchUserResult.password);
-        console.log('isPassportValid :', isPassportValid);
+        // console.log('isPassportValid :', isPassportValid, searchUserResult.subscription);
         if (!isPassportValid) {
             return null;
         }
-        // console.log('ttt: ', ttt);
-        return searchUserResult;
+
+        const payload = {email, subscription: searchUserResult.subscription}
+        console.log('payload', payload);
+        const token = jwt.sign(payload, JWT_SECRET);
+        console.log('token is: ', token);
+
+        try {
+            await User.findOneAndUpdate(email, {token: token})
+        } catch (err) {
+            return err.message;
+        }
+
+        return {
+            "token": token,
+            "user": payload,
+        };
+
     } catch (err) {
         console.log('in Services/users err: ', err.index, err.code, err.keyPattern, err.keyValue);
         return err;

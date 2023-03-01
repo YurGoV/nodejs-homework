@@ -54,7 +54,7 @@ Content-Type: application/json
   "favorite": "true"
 }
 
-###
+### //todo: catch duplicate error
 POST http://localhost:3000/api/users/register
 Content-Type: application/json
 
