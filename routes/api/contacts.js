@@ -15,7 +15,10 @@ const {
     updatePostValidation,
     updateFavoriteValidation
 } = require('../../middlewars/postsValitation');
+const {authMiddleware} = require("../../middlewars/authMiddleware");
 
+
+router.use(authMiddleware);
 
 router.get('/', getContacts)
 

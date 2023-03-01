@@ -1,3 +1,4 @@
+### GET simple
 GET http://localhost:3000/api/contacts
 Accept: application/json
 ###
@@ -73,4 +74,14 @@ Content-Type: application/json
   "password": "nhd783jdol"
 }
 
+###
+
+### GET auth
+GET http://localhost:3000/api/contacts
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV4YW1wMUBlbWFpbC5jb20iLCJzdWJzY3JpcHRpb24iOiJzdGFydGVyIiwiaWF0IjoxNjc3NzA1NjAyfQ.isQOM9mSg7YkBXZOk8tmxuYdnQvAH90W59d42c8v-Mc
+###
+### GET noauth
+GET http://localhost:3000/api/contacts
+Accept: application/json
 ###
