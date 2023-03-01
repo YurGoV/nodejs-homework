@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const schemaCreate = Joi.object({
+const userSchema = Joi.object({
         email: Joi.string()
             .email({minDomainSegments: 2, tlds: {allow: ['com', 'net', 'ua', 'org', 'net']}})
             .required(),
@@ -17,12 +17,12 @@ const schemaCreate = Joi.object({
 // .required(),
 
 module.exports = {
-    addUserValidation: (req, res, next) => {
-        const validationResult = schemaCreate.validate(req.body);
+    authUserValidation: (req, res, next) => {
+        const validationResult = userSchema.validate(req.body);
         if (validationResult.error) {
-            console.log('errrrr');
-            return res.status(400).json({error: validationResult.error})
+            return res.status(400).json({error: validationResult.error.message})
         }
         next();
     },
+
 }

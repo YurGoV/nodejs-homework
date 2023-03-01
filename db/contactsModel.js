@@ -23,6 +23,8 @@ const contactsSchema = new mongoose.Schema({
     },
 });
 
+// todo: make owner as required?
+
 const Contacts = mongoose.model('Contact', contactsSchema);
 
 module.exports = {

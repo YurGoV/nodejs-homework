@@ -19,7 +19,29 @@ const registerUser = async ({email, password}) => {
     }
 }
 
+const findValidUser = async (email, password) => {
+    try {
+        console.log('email in Services/users', email);
+        // return User.find(email);
+        const searchUserResult = await User.findOne({ email });
+
+        if (!searchUserResult) {
+            return null;
+        }
+        const isPassportValid = await bcrypt.compare(password, searchUserResult.password);
+        console.log('isPassportValid :', isPassportValid);
+        if (!isPassportValid) {
+            return null;
+        }
+        // console.log('ttt: ', ttt);
+        return searchUserResult;
+    } catch (err) {
+        console.log('in Services/users err: ', err.index, err.code, err.keyPattern, err.keyValue);
+        return err;
+    }
+}
 
 module.exports = {
     registerUser,
+    findValidUser,
 }
