@@ -31,7 +31,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV4YW1wMUBlbWFpbC5jb20iLCJzdWJzY3JpcHRpb24iOiJzdGFydGVyIiwiaWF0IjoxNjc3NzQwMjE3fQ.L4gx-fCWlbw0g5Y9fhL9w1H92oyKJCzPA5ULBB-OhtE
 
 {
-  "name": "joeNOWWW05",
+  "name": "joeNOWWW06",
   "email": "examp@email.com",
   "phone": "+111111162222"
 }
@@ -71,8 +71,8 @@ POST http://localhost:3000/api/users/register
 Content-Type: application/json
 
 {
-  "email": "examp1@email.com",
-  "password": "nhd783jdol"
+  "email": "examp3@email.com",
+  "password": "nhd783jdol$%&^./`"
 }
 
 ###

@@ -1,20 +1,11 @@
 const Joi = require('joi');
+const {email, password} =  require('./joiTemplates')
 
-const userSchema = Joi.object({
-        email: Joi.string()
-            .email({minDomainSegments: 2, tlds: {allow: ['com', 'net', 'ua', 'org', 'net']}})
-            .required(),
-        password: Joi.string()
-            .pattern(/^[a-zA-Z0-9]{3,30}$/)
-            .required(),
-
+const userSchema = Joi.object().keys({
+        email: email.required(),
+        password: password.required(),
     }
 );
-
-// token: Joi.string()
-// .required(),
-// subscription: Joi.any().valid('starter', 'pro', 'business')
-// .required(),
 
 module.exports = {
     authUserValidation: (req, res, next) => {
@@ -24,5 +15,4 @@ module.exports = {
         }
         next();
     },
-
-}
+};

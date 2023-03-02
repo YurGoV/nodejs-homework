@@ -15,21 +15,21 @@ const {
     updatePostValidation,
     updateFavoriteValidation
 } = require('../../middlewars/postsValitation');
+
 const {authMiddleware} = require("../../middlewars/authMiddleware");
-
-
 router.use(authMiddleware);
 
-router.get('/', getContacts)
 
-router.get('/:contactId', getContactById)
+router.get('/', getContacts);
 
-router.post('/', addPostValidation, addContact)
+router.get('/:contactId', getContactById);
 
-router.delete('/:contactId', deleteContact)
+router.post('/', addPostValidation, addContact);
 
-router.patch('/:contactId', updatePostValidation, patchContact)
+router.delete('/:contactId', deleteContact);
 
-router.patch('/:contactId/favorite/', updateFavoriteValidation, updateFavoriteContact)
+router.patch('/:contactId', updatePostValidation, patchContact);
 
-module.exports = router
+router.patch('/:contactId/favorite/', updateFavoriteValidation, updateFavoriteContact);
+
+module.exports = router;

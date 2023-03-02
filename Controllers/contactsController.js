@@ -27,7 +27,6 @@ const addContact = async (req, res, next) => {
 
     req.body.owner = req.userId;
     const contact = req.body
-    console.log('contact in postController', contact);
     const result = await postContact(contact);
     res.status(201).json({result})
 };
