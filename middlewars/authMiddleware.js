@@ -22,12 +22,14 @@ const authMiddleware = async (req, res, next) => {
         }
 
         console.log('dbUser token', dbUser.token);
+        // console.log('dbUser', dbUser);
         if (dbUser.token !== token) {
                 return res.status(401).json({"message": "Not authorized"})
         }
 
         req.user = tokenUser;
         req.token = token;
+        req.subscription = dbUser.subscription;
 
         // next();
 

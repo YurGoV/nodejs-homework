@@ -40,18 +40,7 @@ const loginUser = async (req, res, next) => {
 
         return res.status(200).json(searchUserResult)
 
-        // const contactData = req.body;
-        // const createdUser = await registerUser(contactData);
-        //
-        // if (createdUser.code === 11000) {
-        //     return res.status(409).json({"message": "Email in use"})
-        // }
-        // res.status(201).json({
-        //     "user": {
-        //         "email": `${createdUser.email}`,
-        //         "subscription": `${createdUser.subscription}`
-        //     }
-        // })
+
     } catch (err) {
         console.log('err in userController', err);
     }
@@ -63,23 +52,31 @@ const logoutUser = async (req, res, next) => {
 
         await User.findOneAndUpdate({email: req.user}, {token: ""})
 
-
-        // console.log('searchUserResult in userController : ', searchUserResult);
-
         return res.status(204).json({})
 
-        // const contactData = req.body;
-        // const createdUser = await registerUser(contactData);
-        //
-        // if (createdUser.code === 11000) {
-        //     return res.status(409).json({"message": "Email in use"})
-        // }
-        // res.status(201).json({
-        //     "user": {
-        //         "email": `${createdUser.email}`,
-        //         "subscription": `${createdUser.subscription}`
-        //     }
-        // })
+
+    } catch (err) {
+        console.log('err in userController', err);
+    }
+};
+
+const getCurrentUser = async (req, res, next) => {
+    try {
+        console.log('req.user in user Controller', req.user);
+        console.log('req.token in user Controller', req.token);
+        console.log('req.subscription in user Controller', req.subscription);
+        // console.log(Object.keys(req));
+
+        const {user, subscription} = req;
+
+        // await User.findOneAndUpdate({email: req.user}, {token: ""})
+
+        return res.status(200).json({
+            "email": user,
+            "subscription": subscription
+        })
+
+
     } catch (err) {
         console.log('err in userController', err);
     }
@@ -89,4 +86,5 @@ module.exports = {
     createUser,
     loginUser,
     logoutUser,
+    getCurrentUser,
 }
