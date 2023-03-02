@@ -1,8 +1,19 @@
 const {Contacts} = require('../db/contactsModel');
 
-const listContacts = async (owner) => {
+const countContacts = async (owner) => {
     try {
-        const data = await Contacts.find({owner}, {__v: 0, owner: 0})
+         return await Contacts.countDocuments({owner})
+    } catch (err) {
+        return err.message;
+    }
+}
+
+const listContacts = async (owner, {skip, limit}) => {
+    try {
+        const data = await Contacts.find({owner})
+            .select({__v: 0, owner: 0})
+            .skip(skip)
+            .limit(limit);
         return data
     } catch (err) {
         return err.message;
@@ -62,4 +73,5 @@ module.exports = {
     removeContact,
     updateContact,
     updateFavorite,
+    countContacts,
 }

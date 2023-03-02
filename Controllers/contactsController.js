@@ -5,12 +5,36 @@ const {
     removeContact,
     updateContact,
     updateFavorite,
+    countContacts,
 } = require("../Services/contacts");
 
 const getContacts = async (req, res, next) => {
     const owner = req.userId;
-    const contacts = await listContacts(owner)
-    res.status(200).json({contacts, status: 'success'})
+
+    const totalContacts = await countContacts(owner);
+
+    let {
+        page = 1,
+        limit = 5
+    } = req.query;
+
+    limit = parseInt(limit) > 10 ? 10 : parseInt(limit);
+    const lastPage = Math.ceil(totalContacts / limit);
+    page = parseInt(page) > lastPage ? lastPage : parseInt(page);
+
+    let skip = 0;
+    if (page > 1) {
+        skip = (page - 1) * limit
+    }
+
+    const pagination = {
+        totalContacts,
+        page,
+        perPage: limit,
+    };
+
+    const contacts = await listContacts(owner, {skip, limit});
+    res.status(200).json({pagination, contacts, status: 'success'})
 };
 
 const getContactById = async (req, res, next) => {
