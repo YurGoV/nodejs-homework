@@ -29,7 +29,7 @@ const authMiddleware = async (req, res, next) => {
         req.user = tokenUser;
         req.token = token;
 
-        next();
+        // next();
 
     } catch(err) {
         console.log('err.messages in auth Middleware', err);
@@ -37,6 +37,7 @@ const authMiddleware = async (req, res, next) => {
         return res.status(401).json({"message": "Not authorized"})
         // next();
     }
+    next();
 }
 
 module.exports = {

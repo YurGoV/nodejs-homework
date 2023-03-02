@@ -79,9 +79,16 @@ Content-Type: application/json
 ### GET auth
 GET http://localhost:3000/api/contacts
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV4YW1wMUBlbWFpbC5jb20iLCJzdWJzY3JpcHRpb24iOiJzdGFydGVyIiwiaWF0IjoxNjc3NzA1NjAyfQ.isQOM9mSg7YkBXZOk8tmxuYdnQvAH90W59d42c8v-Mc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV4YW1wMUBlbWFpbC5jb20iLCJzdWJzY3JpcHRpb24iOiJzdGFydGVyIiwiaWF0IjoxNjc3NzQwMjE3fQ.L4gx-fCWlbw0g5Y9fhL9w1H92oyKJCzPA5ULBB-OhtE
 ###
 ### GET noauth
 GET http://localhost:3000/api/contacts
 Accept: application/json
+###
+
+POST http://localhost:3000/api/users/logout
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV4YW1wMUBlbWFpbC5jb20iLCJzdWJzY3JpcHRpb24iOiJzdGFydGVyIiwiaWF0IjoxNjc3NzA3MzM2fQ.t30w3P_9BJiGo4xMVFANZAuA2iFy6AvBvQIUEMIenDM
+
+
 ###

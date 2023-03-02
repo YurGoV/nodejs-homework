@@ -1,4 +1,5 @@
 const {registerUser, findValidUser} = require('../Services/users');
+const {User} = require("../db/usersModel");
 
 const createUser = async (req, res, next) => {
     try {
@@ -54,10 +55,38 @@ const loginUser = async (req, res, next) => {
     } catch (err) {
         console.log('err in userController', err);
     }
-}
+};
 
+const logoutUser = async (req, res, next) => {
+    try {
+        console.log('req.user in user Controller', req.user);
+
+        await User.findOneAndUpdate({email: req.user}, {token: ""})
+
+
+        // console.log('searchUserResult in userController : ', searchUserResult);
+
+        return res.status(204).json({})
+
+        // const contactData = req.body;
+        // const createdUser = await registerUser(contactData);
+        //
+        // if (createdUser.code === 11000) {
+        //     return res.status(409).json({"message": "Email in use"})
+        // }
+        // res.status(201).json({
+        //     "user": {
+        //         "email": `${createdUser.email}`,
+        //         "subscription": `${createdUser.subscription}`
+        //     }
+        // })
+    } catch (err) {
+        console.log('err in userController', err);
+    }
+}
 
 module.exports = {
     createUser,
     loginUser,
+    logoutUser,
 }
