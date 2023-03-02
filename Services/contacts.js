@@ -1,17 +1,18 @@
 const {Contacts} = require('../db/contactsModel');
 
-const listContacts = async () => {
+const listContacts = async (owner) => {
     try {
-        const data = await Contacts.find({})
+        const data = await Contacts.find({owner})
+        // const data = await Contacts.find({}).populate('owner')
         return data
     } catch (err) {
         return err;
     }
 }
 
-const listContactById = async (contactId) => {
+const listContactById = async (contactId, owner) => {
     try {
-        const data = await Contacts.findById(contactId)
+        const data = await Contacts.findOne({_id: contactId, owner})
         return data
     } catch (err) {
         return err;
@@ -26,9 +27,9 @@ const postContact = async (body) => {
     }
 }
 
-const removeContact = async (contactId) => {
+const removeContact = async (contactId, owner) => {
     try {
-        const contact = await Contacts.findByIdAndRemove(contactId);
+        const contact = await Contacts.findOneAndRemove({_id: contactId, owner});
         if (!contact) {
             return {"message": "Not found"};
         }
@@ -38,17 +39,17 @@ const removeContact = async (contactId) => {
     }
 }
 
-const updateContact = async (contactId, body) => {
+const updateContact = async (contactId, owner, body) => {
     try {
-        return Contacts.updateOne({_id: contactId}, body);
+        return Contacts.updateOne({_id: contactId, owner}, body);
     } catch (err) {
         return err;
     }
 }
 
-const updateFavorite = async (contactId, body) => {
+const updateFavorite = async (contactId, owner, body) => {
     try {
-        return Contacts.updateOne({_id: contactId}, body);
+        return Contacts.updateOne({_id: contactId, owner}, body);
     } catch (err) {
         return err;
     }

@@ -2,9 +2,19 @@
 GET http://localhost:3000/api/contacts
 Accept: application/json
 ###
-
-GET http://localhost:3000/api/contacts/63efd6f0b529ebf6bc279e5f
+GET http://localhost:3000/api/contacts/64005ebe93f0975ba9b7bdd7
 Accept: application/json
+###
+
+### BY ID no owner
+GET http://localhost:3000/api/contacts/63f1e79d4dc50cca4f43735b
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV4YW1wMUBlbWFpbC5jb20iLCJzdWJzY3JpcHRpb24iOiJzdGFydGVyIiwiaWF0IjoxNjc3NzQwMjE3fQ.L4gx-fCWlbw0g5Y9fhL9w1H92oyKJCzPA5ULBB-OhtE
+###
+### BY ID with owner
+GET http://localhost:3000/api/contacts/64005ebe93f0975ba9b7bdd7
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV4YW1wMUBlbWFpbC5jb20iLCJzdWJzY3JpcHRpb24iOiJzdGFydGVyIiwiaWF0IjoxNjc3NzQwMjE3fQ.L4gx-fCWlbw0g5Y9fhL9w1H92oyKJCzPA5ULBB-OhtE
 ###
 
 POST http://localhost:3000/api/contacts
@@ -18,9 +28,10 @@ Content-Type: application/json
 ###
 POST http://localhost:3000/api/contacts
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV4YW1wMUBlbWFpbC5jb20iLCJzdWJzY3JpcHRpb24iOiJzdGFydGVyIiwiaWF0IjoxNjc3NzQwMjE3fQ.L4gx-fCWlbw0g5Y9fhL9w1H92oyKJCzPA5ULBB-OhtE
 
 {
-  "name": "joeNOWWW1",
+  "name": "joeNOWWW05",
   "email": "examp@email.com",
   "phone": "+111111162222"
 }
@@ -76,7 +87,7 @@ Content-Type: application/json
 
 ###
 
-### GET auth
+### GET All auth
 GET http://localhost:3000/api/contacts
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV4YW1wMUBlbWFpbC5jb20iLCJzdWJzY3JpcHRpb24iOiJzdGFydGVyIiwiaWF0IjoxNjc3NzQwMjE3fQ.L4gx-fCWlbw0g5Y9fhL9w1H92oyKJCzPA5ULBB-OhtE

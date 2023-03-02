@@ -22,7 +22,6 @@ const contactsSchema = new mongoose.Schema({
         ref: 'users',
     },
 });
-
 // todo: make owner as required?
 
 const Contacts = mongoose.model('Contact', contactsSchema);
