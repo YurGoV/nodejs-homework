@@ -18,14 +18,13 @@ const start = async () => {
 
     app.listen(PORT, (err) => {
         if (err) {
-            console.error('Error at server launch:', err);
+            console.error('Error at server launch:', err.message);
         }
-        console.log(`Server running. Use our API on port: ${PORT}`)
     })
 };
 
 start()
-    .then(console.log)
+    .then(console.log(`Server running. Use our API on port: ${PORT}`))
     .catch(console.error)
 
 

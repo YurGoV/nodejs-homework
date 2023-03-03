@@ -1,11 +1,6 @@
 const Joi = require('joi');
 
-const name = Joi.string()
-    .pattern(/^[a-zA-Zа-яА-Я0-9іІїЇєЄґҐ']{3,20}$/);
-const email = Joi.string()
-    .email({minDomainSegments: 2, tlds: {allow: ['com', 'net', 'ua', 'org', 'net']}});
-const phone = Joi.string()
-    .pattern(/^[+0-9]{13}$/);
+const {name, email, phone} = require('./joiTemplates')
 
 const schemaPost = Joi.object().keys({
     name: name.required(),
@@ -40,7 +35,6 @@ module.exports = {
         }
         next();
     },
-
     updateFavoriteValidation: (req, res, next) => {
         const validationResult = schemaFaforite.validate(req.body);
         if (validationResult.error) {
