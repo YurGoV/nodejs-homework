@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const {email, password} =  require('./joiTemplates')
+const {email, password} = require('./joiTemplates')
 
 const userSchema = Joi.object().keys({
         email: email.required(),

@@ -9,7 +9,6 @@ const phone = Joi.string()
 const password = Joi.string()
     .pattern(/^[a-zA-Z0-9.;,/.;'`)(*&^%$#@!~]{3,30}$/);
 
-
 module.exports = {
     name,
     email,

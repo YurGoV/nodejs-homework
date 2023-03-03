@@ -1,16 +1,16 @@
 const {Contacts} = require('../db/contactsModel');
 
-const countContacts = async (owner) => {
+const countContacts = async (owner, favoriteArr) => {
     try {
-         return await Contacts.countDocuments({owner})
+        return await Contacts.countDocuments({owner: owner, favorite: favoriteArr})
     } catch (err) {
         return err.message;
     }
 }
 
-const listContacts = async (owner, {skip, limit}) => {
+const listContacts = async (owner, favoriteArr, {skip, limit}) => {
     try {
-        const data = await Contacts.find({owner})
+        const data = await Contacts.find({owner: owner, favorite: favoriteArr})
             .select({__v: 0, owner: 0})
             .skip(skip)
             .limit(limit);
@@ -22,7 +22,7 @@ const listContacts = async (owner, {skip, limit}) => {
 
 const listContactById = async (contactId, owner) => {
     try {
-        const data = await Contacts.findOne({_id: contactId, owner})
+        const data = await Contacts.findOne({_id: contactId, owner: owner})
         return data
     } catch (err) {
         return err.message;
@@ -39,7 +39,7 @@ const postContact = async (body) => {
 
 const removeContact = async (contactId, owner) => {
     try {
-        const contact = await Contacts.findOneAndRemove({_id: contactId, owner});
+        const contact = await Contacts.findOneAndRemove({_id: contactId, owner: owner});
         if (!contact) {
             return {"message": "Not found"};
         }
@@ -51,7 +51,7 @@ const removeContact = async (contactId, owner) => {
 
 const updateContact = async (contactId, owner, body) => {
     try {
-        return Contacts.updateOne({_id: contactId, owner}, body);
+        return Contacts.updateOne({_id: contactId, owner: owner}, body);
     } catch (err) {
         return err.message;
     }
@@ -59,7 +59,7 @@ const updateContact = async (contactId, owner, body) => {
 
 const updateFavorite = async (contactId, owner, body) => {
     try {
-        return Contacts.updateOne({_id: contactId, owner}, body);
+        return Contacts.updateOne({_id: contactId, owner: owner}, body);
     } catch (err) {
         return err.message;
     }

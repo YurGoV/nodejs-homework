@@ -9,7 +9,7 @@ const registerUser = async ({email, password}) => {
 
     try {
         const encryptedPassword = await bcrypt.hash(password, 10);
-        return User.create({email, password: encryptedPassword});
+        return User.create({email: email, password: encryptedPassword});
     } catch (err) {
         return err.message;
     }
@@ -17,7 +17,7 @@ const registerUser = async ({email, password}) => {
 
 const findValidUser = async (email, password) => {
     try {
-        const searchUserResult = await User.findOne({email});
+        const searchUserResult = await User.findOne({email: email});
 
         if (!searchUserResult) {
             return null;
@@ -27,10 +27,10 @@ const findValidUser = async (email, password) => {
             return null;
         }
 
-        const payload = {email, subscription: searchUserResult.subscription}
+        const payload = {email: email, subscription: searchUserResult.subscription}
         const token = jwt.sign(payload, JWT_SECRET);
 
-        await User.findOneAndUpdate(email, {token: token})
+        await User.findOneAndUpdate({email: email}, {token: token})
 
         return {
             "token": token,

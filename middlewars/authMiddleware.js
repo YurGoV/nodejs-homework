@@ -13,11 +13,12 @@ const authMiddleware = async (req, res, next) => {
         const tokenVerify = jwt.verify(token, JWT_SECRET);
         const tokenUser = tokenVerify.email;
         const dbUser = await User.findOne({email: tokenUser})
+
         if (!dbUser) {
             return res.status(401).json({"message": "Not authorized"})
         }
         if (dbUser.token !== token) {
-                return res.status(401).json({"message": "Not authorized"})
+            return res.status(401).json({"message": "Not authorized"})
         }
 
         req.user = tokenUser;
@@ -25,7 +26,7 @@ const authMiddleware = async (req, res, next) => {
         req.subscription = dbUser.subscription;
         req.userId = dbUser._id;
 
-    } catch(err) {
+    } catch (err) {
         return res.status(401).json({"message": "Not authorized"})
     }
     next();

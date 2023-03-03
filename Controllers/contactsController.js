@@ -11,12 +11,19 @@ const {
 const getContacts = async (req, res, next) => {
     const owner = req.userId;
 
-    const totalContacts = await countContacts(owner);
-
     let {
         page = 1,
-        limit = 5
+        limit = 5,
+        favorite = [true, false],
     } = req.query;
+
+    if (favorite !== 'true') {
+        favorite = [true, false]
+    } else {
+        favorite = true;
+    }
+
+    const totalContacts = await countContacts(owner, favorite);
 
     limit = parseInt(limit) > 10 ? 10 : parseInt(limit);
     const lastPage = Math.ceil(totalContacts / limit);
@@ -33,7 +40,7 @@ const getContacts = async (req, res, next) => {
         perPage: limit,
     };
 
-    const contacts = await listContacts(owner, {skip, limit});
+    const contacts = await listContacts(owner, favorite, {skip, limit});
     res.status(200).json({pagination, contacts, status: 'success'})
 };
 
@@ -76,6 +83,7 @@ const patchContact = async (req, res, next) => {
     }
 
     const updatedContact = await updateContact(id, owner, body);
+
     if (updatedContact) {
         res.status(200).json({"message": updatedContact})
     } else {
@@ -89,7 +97,7 @@ const updateFavoriteContact = async (req, res, next) => {
     const body = req.body;
 
     const favoriteContact = await updateFavorite(contactId, owner, body)
-    if (favoriteContact) {
+    if (favoriteContact && favoriteContact.matchedCount === 1) {
         res.status(200).json(favoriteContact)
     } else {
         res.status(404).json({"message": "Not found"})

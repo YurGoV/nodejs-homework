@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const {name, email, phone} =  require('./joiTemplates')
+const {name, email, phone} = require('./joiTemplates')
 
 const schemaPost = Joi.object().keys({
     name: name.required(),
