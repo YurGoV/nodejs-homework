@@ -2,7 +2,7 @@ const multer = require('multer');
 const { v4: uuid } = require('uuid');
 const path = require('path');
 
-const FILE_DIR =  path.resolve('./public/avatars');
+const FILE_DIR =  path.resolve('./tmp');
 
 const {
     uploadController,
@@ -15,7 +15,11 @@ const storage = multer.diskStorage({
     filename: (req, file, cb) => {
         // console.log(file);
         const [filename, extension] = file.originalname.split('.');
-        cb(null, `${filename}_${uuid()}.${extension}`)
+        const uniqueFileName = `${filename}_${uuid()}.${extension}`;
+        // const path = `http://localhost:3000/api/users/avatars/${uniqueFileName}`;
+        req.avatarURL = `http://localhost:3000/api/avatars/${uniqueFileName}`
+        // console.log(path);
+        cb(null, `${uniqueFileName}`)
     }
 });
 

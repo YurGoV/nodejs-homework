@@ -1,6 +1,6 @@
 const express = require('express');
-const multer = require('multer');
-const { v4: uuid } = require('uuid');
+// const multer = require('multer');
+// const { v4: uuid } = require('uuid');
 const path = require('path');
 
 const router = new express.Router();
@@ -8,7 +8,7 @@ const router = new express.Router();
 const FILE_DIR =  path.resolve('./public/avatars');
 // console.log(FILE_DIR);
 
-const {
+/* const {
     uploadController,
 } = require('../../Controllers/filesController');
 
@@ -28,9 +28,9 @@ const uploadMiddleware = multer({storage});// todo: move to middlewares
 
 // POST /api/avatars/upload
 // router.patch('/upload', uploadMiddleware.single('avatar'), uploadController);
-router.patch('/', uploadMiddleware.single('avatar'), uploadController);
+router.patch('/', uploadMiddleware.single('avatar'), uploadController); */
 
-router.use('/download', express.static(FILE_DIR));
+router.use('/', express.static(FILE_DIR));
 
 
 

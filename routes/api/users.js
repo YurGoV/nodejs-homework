@@ -15,9 +15,12 @@ router.get('/login', authUserValidation, loginUser);
 router.post('/logout', authMiddleware, logoutUser);
 router.get('/current', authMiddleware, getCurrentUser);
 // router.patch('/avatars', authMiddleware, uploadAvatar);
-router.patch('/avatars', uploadAvatarMiddleware.single('avatar'), uploadAvatar);
+router.patch('/avatars',
+    [authMiddleware, uploadAvatarMiddleware.single('avatar')],
+    uploadAvatar);
 // router.patch('/avatars', filesRouter);
 
+router.use('/avatars', express.static('./public/avatars'));
 
 
 module.exports = router;

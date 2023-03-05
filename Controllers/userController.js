@@ -68,11 +68,15 @@ const getCurrentUser = async (req, res, next) => {
 const uploadAvatar = async (req, res, next) => {
     try {
 
-        // const {user, subscription} = req;
-        console.log('uplAvatar', req.body);
+        const {user, avatarURL} = req;
+        console.log(user, avatarURL);
+        await User.findOneAndUpdate({email: user}, {avatarURL: avatarURL})
+        // console.log('uplAvatar', req.avatarURL);
+
+
 
         return res.status(200).json({
-            "status": "success"
+            "avatarURL": avatarURL
         })
 
         /* return res.status(200).json({
