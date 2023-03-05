@@ -6,7 +6,7 @@ const path = require('path');
 const router = new express.Router();
 
 const FILE_DIR =  path.resolve('./public/avatars');
-console.log(FILE_DIR);
+// console.log(FILE_DIR);
 
 const {
     uploadController,
@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
         cb(null, FILE_DIR)
     },
     filename: (req, file, cb) => {
-        console.log(file);
+        // console.log(file);
         const [filename, extension] = file.originalname.split('.');
         cb(null, `${filename}_${uuid()}.${extension}`)
     }
@@ -30,7 +30,7 @@ const uploadMiddleware = multer({storage});
 
 // POST /api/files/upload
 router.post('/upload', uploadMiddleware.single('avatar'), uploadController);
-// router.use('/download', express.static(FILE_DIR));
+router.use('/download', express.static(FILE_DIR));
 
 
 
