@@ -63,11 +63,32 @@ const getCurrentUser = async (req, res, next) => {
     } catch (err) {
         res.status(500).json(err.message)
     }
-}
+};
+
+const uploadAvatar = async (req, res, next) => {
+    try {
+
+        // const {user, subscription} = req;
+        console.log('uplAvatar', req.body);
+
+        return res.status(200).json({
+            "status": "success"
+        })
+
+        /* return res.status(200).json({
+            "email": user,
+            "subscription": subscription
+        }) */
+
+    } catch (err) {
+        res.status(500).json(err.message)
+    }
+};
 
 module.exports = {
     createUser,
     loginUser,
     logoutUser,
     getCurrentUser,
+    uploadAvatar,
 }

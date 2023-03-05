@@ -1,17 +1,12 @@
-const express = require('express');
 const multer = require('multer');
 const { v4: uuid } = require('uuid');
 const path = require('path');
 
-const router = new express.Router();
-
 const FILE_DIR =  path.resolve('./public/avatars');
-// console.log(FILE_DIR);
 
 const {
     uploadController,
-} = require('../../Controllers/filesController');
-
+} = require('../Controllers/filesController');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -24,14 +19,9 @@ const storage = multer.diskStorage({
     }
 });
 
-const uploadMiddleware = multer({storage});// todo: move to middlewares
-
-// POST /api/avatars/upload
-// router.patch('/upload', uploadMiddleware.single('avatar'), uploadController);
-router.patch('/', uploadMiddleware.single('avatar'), uploadController);
-
-router.use('/download', express.static(FILE_DIR));
+const uploadAvatarMiddleware = multer({storage});// todo: move to middlewares
 
 
-
-module.exports = router;
+module.exports = {
+    uploadAvatarMiddleware
+}
