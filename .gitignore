@@ -3,5 +3,4 @@ node_modules/
 .idea
 .idea.*
 api_test/
-tmp/*
 public/avatars/*
