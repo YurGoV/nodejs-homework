@@ -5,7 +5,7 @@ const path = require('path');
 
 const router = new express.Router();
 
-const FILE_DIR =  path.resolve('./public/avatars');
+const FILE_DIR =  path.resolve('./public/avatars');// todo paths in .env
 // console.log(FILE_DIR);
 
 /* const {

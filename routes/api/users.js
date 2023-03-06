@@ -20,7 +20,7 @@ router.patch('/avatars',
     uploadAvatar);
 // router.patch('/avatars', filesRouter);
 
-router.use('/avatars', express.static('./public/avatars'));
+// router.use('/avatars', express.static('./public/avatars'));
 
 
 module.exports = router;
