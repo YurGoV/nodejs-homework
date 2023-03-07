@@ -1,6 +1,6 @@
 const {Contacts} = require('../db/contactsModel');
 
-const countContacts = async (owner, favoriteArr) => {
+const countContactsServ = async (owner, favoriteArr) => {
     try {
         return await Contacts.countDocuments({owner: owner, favorite: favoriteArr})
     } catch (err) {
@@ -8,7 +8,7 @@ const countContacts = async (owner, favoriteArr) => {
     }
 }
 
-const listContacts = async (owner, favoriteArr, {skip, limit}) => {
+const listContactsServ = async (owner, favoriteArr, {skip, limit}) => {
     try {
         const data = await Contacts.find({owner: owner, favorite: favoriteArr})
             .select({__v: 0, owner: 0})
@@ -20,7 +20,7 @@ const listContacts = async (owner, favoriteArr, {skip, limit}) => {
     }
 }
 
-const listContactById = async (contactId, owner) => {
+const listContactByIdServ = async (contactId, owner) => {
     try {
         const data = await Contacts.findOne({_id: contactId, owner: owner})
         return data
@@ -29,7 +29,7 @@ const listContactById = async (contactId, owner) => {
     }
 }
 
-const postContact = async (body) => {
+const postContactServ = async (body) => {
     try {
         return Contacts.create(body)
     } catch (err) {
@@ -37,19 +37,19 @@ const postContact = async (body) => {
     }
 }
 
-const removeContact = async (contactId, owner) => {
+const removeContactServ = async (contactId, owner) => {
     try {
         const contact = await Contacts.findOneAndRemove({_id: contactId, owner: owner});
         if (!contact) {
-            return {"message": "Not found"};
+            return {"statusCode": 404, "message": "Not found"};
         }
-        return {"message": "contact deleted"};
+        return {"statusCode": 200, "message": "contact deleted"};
     } catch (err) {
         return err.message;
     }
 }
 
-const updateContact = async (contactId, owner, body) => {
+const updateContactServ = async (contactId, owner, body) => {
     try {
         return Contacts.updateOne({_id: contactId, owner: owner}, body);
     } catch (err) {
@@ -57,7 +57,7 @@ const updateContact = async (contactId, owner, body) => {
     }
 }
 
-const updateFavorite = async (contactId, owner, body) => {
+const updateFavoriteServ = async (contactId, owner, body) => {
     try {
         return Contacts.updateOne({_id: contactId, owner: owner}, body);
     } catch (err) {
@@ -67,11 +67,11 @@ const updateFavorite = async (contactId, owner, body) => {
 
 
 module.exports = {
-    listContacts,
-    listContactById,
-    postContact,
-    removeContact,
-    updateContact,
-    updateFavorite,
-    countContacts,
+    listContactsServ,
+    listContactByIdServ,
+    postContactServ,
+    removeContactServ,
+    updateContactServ,
+    updateFavoriteServ,
+    countContactsServ,
 }

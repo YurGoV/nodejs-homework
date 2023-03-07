@@ -2,20 +2,35 @@ const {User} = require('../db/usersModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
+const gravatar = require('gravatar');
+
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-const registerUser = async ({email, password}) => {
+const generateAvatar = async (email) => {
+    try {
+        return await gravatar.url(email, {protocol: 'http', s: '100'});
+    } catch (err) {
+        console.log(err.message);
+        return '';
+    }
+}
+
+const registerUserServ = async ({email, password}) => {
 
     try {
         const encryptedPassword = await bcrypt.hash(password, 10);
-        return User.create({email: email, password: encryptedPassword});
+
+        const gravatarUrl = await generateAvatar(email);
+
+        return User.create({email: email, password: encryptedPassword, avatarURL: gravatarUrl});
+
     } catch (err) {
         return err.message;
     }
 }
 
-const findValidUser = async (email, password) => {
+const findValidUserServ = async (email, password) => {
     try {
         const searchUserResult = await User.findOne({email: email});
 
@@ -43,6 +58,6 @@ const findValidUser = async (email, password) => {
 }
 
 module.exports = {
-    registerUser,
-    findValidUser,
+    registerUserServ,
+    findValidUserServ,
 }

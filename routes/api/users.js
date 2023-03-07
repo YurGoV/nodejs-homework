@@ -1,14 +1,27 @@
 const express = require('express');
 const router = express.Router();
+const {
+    createUserContr,
+    loginUserContr,
+    logoutUserContr,
+    getCurrentUserContr,
+    uploadAvatarContr
+} = require('../../Controllers');
 
-const {createUser, loginUser, logoutUser, getCurrentUser} = require('../../Controllers/userController');
-const {authUserValidation} = require("../../middlewars/usersValidation");
-const {authMiddleware} = require("../../middlewars/authMiddleware");
+
+const {
+    authUserValidationMwr,
+    authMwr,
+    uploadAvatarMwr
+} = require("../../middlewars");
 
 
-router.post('/register', authUserValidation, createUser);
-router.get('/login', authUserValidation, loginUser);
-router.post('/logout', authMiddleware, logoutUser);
-router.get('/current', authMiddleware, getCurrentUser);
+router.post('/register', authUserValidationMwr, createUserContr);
+router.get('/login', authUserValidationMwr, loginUserContr);
+router.post('/logout', authMwr, logoutUserContr);
+router.get('/current', authMwr, getCurrentUserContr);
+router.patch('/avatars',
+    [authMwr, uploadAvatarMwr.single('avatar')],
+    uploadAvatarContr);
 
 module.exports = router;

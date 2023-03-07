@@ -3,7 +3,7 @@ const {User} = require("../db/usersModel");
 const JWT_SECRET = process.env.JWT_SECRET;
 
 
-const authMiddleware = async (req, res, next) => {
+const authMwr = async (req, res, next) => {
     try {
         if (!req.headers.authorization) {
             return res.status(400).json({"message": "Please, provide a token"})
@@ -33,5 +33,5 @@ const authMiddleware = async (req, res, next) => {
 }
 
 module.exports = {
-    authMiddleware,
+    authMwr: authMwr,
 }

@@ -8,7 +8,7 @@ const userSchema = Joi.object().keys({
 );
 
 module.exports = {
-    authUserValidation: (req, res, next) => {
+    authUserValidationMwr: (req, res, next) => {
         const validationResult = userSchema.validate(req.body);
         if (validationResult.error) {
             return res.status(400).json({error: validationResult.error.message})

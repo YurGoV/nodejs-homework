@@ -21,21 +21,21 @@ const schemaFaforite = Joi.object({
 
 
 module.exports = {
-    addPostValidation: (req, res, next) => {
+    addPostValidationMwr: (req, res, next) => {
         const validationResult = schemaPost.validate(req.body);
         if (validationResult.error) {
             return res.status(400).json({error: validationResult.error.details[0].message})
         }
         next();
     },
-    updatePostValidation: (req, res, next) => {
+    updatePostValidationMwr: (req, res, next) => {
         const validationResult = schemaUpdate.validate(req.body);
         if (validationResult.error) {
             return res.status(400).json({error: validationResult.error.details[0].message})
         }
         next();
     },
-    updateFavoriteValidation: (req, res, next) => {
+    updateFavoriteValidationMwr: (req, res, next) => {
         const validationResult = schemaFaforite.validate(req.body);
         if (validationResult.error) {
             return res.status(400).json({error: validationResult.error.details[0].message})
