@@ -20,6 +20,7 @@ const {User} = require("../db/usersModel");
 const createUserContr = async (req, res, next) => {
     try {
         const userData = req.body;
+
         const createdUser = await registerUserServ(userData);
 
         res.status(201).json({
@@ -108,7 +109,7 @@ const uploadAvatarContr = async (req, res, next) => {
 const verifyUserContr = async (req, res, next) => {
 
     const {verificationToken} = req.params;
-    console.log('user Controller verificationToken', verificationToken);// todo: delete
+    // console.log('user Controller verificationToken', verificationToken);// todo: delete
 
     const verifyTokenResult = await verifyUserServ(verificationToken);
     if (verifyTokenResult.statusCode === 200) {
@@ -121,7 +122,7 @@ const verifyUserContr = async (req, res, next) => {
         })
     }
 
-    console.log('userController verifyTokenResult', verifyTokenResult);// todo: delete
+    // console.log('userController verifyTokenResult', verifyTokenResult);// todo: delete
 
     res.status(500).json({"message": "test"})
 }

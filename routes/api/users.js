@@ -27,3 +27,5 @@ router.patch('/avatars',
 router.get('/verify/:verificationToken', verifyUserContr)// todo: validation middleware?
 
 module.exports = router;
+
+// todo: 3. Так само необхідно враховувати, що тепер логін користувача не дозволено, якщо не верифікувано email
