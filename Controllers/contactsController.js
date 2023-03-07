@@ -1,14 +1,14 @@
 const {
-    listContacts,
-    listContactById,
-    postContact,
-    removeContact,
-    updateContact,
-    updateFavorite,
-    countContacts,
-} = require("../Services/contacts");
+    listContactsServ,
+    listContactByIdServ,
+    postContactServ,
+    removeContactServ,
+    updateContactServ,
+    updateFavoriteServ,
+    countContactsServ,
+} = require("../Services");
 
-const getContacts = async (req, res, next) => {
+const getContactsContr = async (req, res, next) => {
     const owner = req.userId;
 
     let {
@@ -23,7 +23,7 @@ const getContacts = async (req, res, next) => {
         favorite = true;
     }
 
-    const totalContacts = await countContacts(owner, favorite);
+    const totalContacts = await countContactsServ(owner, favorite);
 
     limit = parseInt(limit) > 10 ? 10 : parseInt(limit);
     const lastPage = Math.ceil(totalContacts / limit);
@@ -40,32 +40,32 @@ const getContacts = async (req, res, next) => {
         perPage: limit,
     };
 
-    const contacts = await listContacts(owner, favorite, {skip, limit});
+    const contacts = await listContactsServ(owner, favorite, {skip, limit});
     res.status(200).json({pagination, contacts, status: 'success'})
 };
 
-const getContactById = async (req, res, next) => {
+const getContactByIdContr = async (req, res, next) => {
     const id = req.params.contactId
     const owner = req.userId;
-    const contact = await listContactById(id, owner)
+    const contact = await listContactByIdServ(id, owner)
     if (!contact) {
         return res.status(404).json({"message": "Not found"})
     }
     res.status(200).json(contact)
 };
 
-const addContact = async (req, res, next) => {
+const addContactContr = async (req, res, next) => {
 
     req.body.owner = req.userId;
     const contact = req.body
-    const result = await postContact(contact);
+    const result = await postContactServ(contact);
     res.status(201).json({result})
 };
 
-const deleteContact = async (req, res, next) => {
+const deleteContactContr = async (req, res, next) => {
     const id = req.params.contactId;
     const owner = req.userId;
-    const deleteResult = await removeContact(id, owner);
+    const deleteResult = await removeContactServ(id, owner);
     if (deleteResult.statusCode === 404) {
         return res.status(404).json(deleteResult)
     }
@@ -74,7 +74,7 @@ const deleteContact = async (req, res, next) => {
     }
 };
 
-const patchContact = async (req, res, next) => {
+const patchContactContr = async (req, res, next) => {
     const id = req.params.contactId;
     const owner = req.userId;
     const body = req.body;
@@ -82,7 +82,7 @@ const patchContact = async (req, res, next) => {
         return res.status(400).json({"message": "missing fields"})
     }
 
-    const updatedContact = await updateContact(id, owner, body);
+    const updatedContact = await updateContactServ(id, owner, body);
 
     if (updatedContact) {
         res.status(200).json({"message": updatedContact})
@@ -91,12 +91,12 @@ const patchContact = async (req, res, next) => {
     }
 };
 
-const updateFavoriteContact = async (req, res, next) => {
+const updateFavoriteContactContr = async (req, res, next) => {
     const {contactId} = req.params;
     const owner = req.userId;
     const body = req.body;
 
-    const favoriteContact = await updateFavorite(contactId, owner, body)
+    const favoriteContact = await updateFavoriteServ(contactId, owner, body)
     if (favoriteContact && favoriteContact.matchedCount === 1) {
         res.status(200).json(favoriteContact)
     } else {
@@ -105,10 +105,10 @@ const updateFavoriteContact = async (req, res, next) => {
 };
 
 module.exports = {
-    getContacts,
-    getContactById,
-    addContact,
-    deleteContact,
-    patchContact,
-    updateFavoriteContact,
+    getContactsContr,
+    getContactByIdContr,
+    addContactContr,
+    deleteContactContr,
+    patchContactContr,
+    updateFavoriteContactContr,
 }

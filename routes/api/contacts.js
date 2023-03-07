@@ -2,34 +2,34 @@ const express = require('express');
 const router = express.Router();
 
 const {
-    getContacts,
-    getContactById,
-    addContact,
-    deleteContact,
-    patchContact,
-    updateFavoriteContact,
-} = require('../../Controllers/contactsController');
+    getContactsContr,
+    getContactByIdContr,
+    addContactContr,
+    deleteContactContr,
+    patchContactContr,
+    updateFavoriteContactContr,
+} = require('../../Controllers');
 
 const {
-    addPostValidation,
-    updatePostValidation,
-    updateFavoriteValidation
-} = require('../../middlewars/postsValitation');
+    addPostValidationMwr,
+    updatePostValidationMwr,
+    updateFavoriteValidationMwr,
+    authMwr,
+} = require('../../middlewars');
 
-const {authMiddleware} = require("../../middlewars/authMiddleware");
-router.use(authMiddleware);
+router.use(authMwr);
 
 
-router.get('/', getContacts);
+router.get('/', getContactsContr);
 
-router.get('/:contactId', getContactById);
+router.get('/:contactId', getContactByIdContr);
 
-router.post('/', addPostValidation, addContact);
+router.post('/', addPostValidationMwr, addContactContr);
 
-router.delete('/:contactId', deleteContact);
+router.delete('/:contactId', deleteContactContr);
 
-router.patch('/:contactId', updatePostValidation, patchContact);
+router.patch('/:contactId', updatePostValidationMwr, patchContactContr);
 
-router.patch('/:contactId/favorite/', updateFavoriteValidation, updateFavoriteContact);
+router.patch('/:contactId/favorite/', updateFavoriteValidationMwr, updateFavoriteContactContr);
 
 module.exports = router;

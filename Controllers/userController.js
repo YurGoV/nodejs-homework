@@ -9,14 +9,17 @@ const AVATAR_CONST_DIR_ENV = process.env.AVATAR_CONST_DIR_ENV;
 const AVATAR_TEMP_DIR = path.resolve(AVATAR_TEMP_DIR_ENV);
 const AVATAR_CONST_DIR = path.resolve(AVATAR_CONST_DIR_ENV)
 
-const {registerUser, findValidUser} = require('../Services/users');
+const {
+    registerUserServ,
+    findValidUserServ
+} = require('../Services');
 const {User} = require("../db/usersModel");
 
 
-const createUser = async (req, res, next) => {
+const createUserContr = async (req, res, next) => {
     try {
         const userData = req.body;
-        const createdUser = await registerUser(userData);
+        const createdUser = await registerUserServ(userData);
 
         res.status(201).json({
             "user": {
@@ -33,11 +36,11 @@ const createUser = async (req, res, next) => {
     }
 };
 
-const loginUser = async (req, res, next) => {
+const loginUserContr = async (req, res, next) => {
     try {
         const {email, password} = req.body;
 
-        const searchUserResult = await findValidUser(email, password);
+        const searchUserResult = await findValidUserServ(email, password);
         if (!searchUserResult) {
             return res.status(401).json({
                 "message": "Email or password is wrong"
@@ -51,7 +54,7 @@ const loginUser = async (req, res, next) => {
     }
 };
 
-const logoutUser = async (req, res, next) => {
+const logoutUserContr = async (req, res, next) => {
     try {
 
         await User.findOneAndUpdate({email: req.user}, {token: ""})
@@ -63,7 +66,7 @@ const logoutUser = async (req, res, next) => {
     }
 };
 
-const getCurrentUser = async (req, res, next) => {
+const getCurrentUserContr = async (req, res, next) => {
     try {
 
         const {user, subscription} = req;
@@ -78,7 +81,7 @@ const getCurrentUser = async (req, res, next) => {
     }
 };
 
-const uploadAvatar = async (req, res, next) => {
+const uploadAvatarContr = async (req, res, next) => {
     try {
         const {user, uniqueFileName} = req;
         const avatarTempUrl = path.resolve(AVATAR_TEMP_DIR, uniqueFileName);
@@ -102,9 +105,9 @@ const uploadAvatar = async (req, res, next) => {
 };
 
 module.exports = {
-    createUser,
-    loginUser,
-    logoutUser,
-    getCurrentUser,
-    uploadAvatar,
+    createUserContr,
+    loginUserContr,
+    logoutUserContr,
+    getCurrentUserContr,
+    uploadAvatarContr,
 }

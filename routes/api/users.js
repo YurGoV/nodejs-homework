@@ -1,23 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const {
-    createUser,
-    loginUser,
-    logoutUser,
-    getCurrentUser,
-    uploadAvatar
-} = require('../../Controllers/userController');
-const {authUserValidation} = require("../../middlewars/usersValidation");
-const {authMiddleware} = require("../../middlewars/authMiddleware");
-const {uploadAvatarMiddleware} = require("../../middlewars/uploadAvatarMiddleware");
+    createUserContr,
+    loginUserContr,
+    logoutUserContr,
+    getCurrentUserContr,
+    uploadAvatarContr
+} = require('../../Controllers');
 
 
-router.post('/register', authUserValidation, createUser);
-router.get('/login', authUserValidation, loginUser);
-router.post('/logout', authMiddleware, logoutUser);
-router.get('/current', authMiddleware, getCurrentUser);
+const {
+    authUserValidationMwr,
+    authMwr,
+    uploadAvatarMwr
+} = require("../../middlewars");
+
+
+router.post('/register', authUserValidationMwr, createUserContr);
+router.get('/login', authUserValidationMwr, loginUserContr);
+router.post('/logout', authMwr, logoutUserContr);
+router.get('/current', authMwr, getCurrentUserContr);
 router.patch('/avatars',
-    [authMiddleware, uploadAvatarMiddleware.single('avatar')],
-    uploadAvatar);
+    [authMwr, uploadAvatarMwr.single('avatar')],
+    uploadAvatarContr);
 
 module.exports = router;

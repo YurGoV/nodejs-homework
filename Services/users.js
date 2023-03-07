@@ -16,7 +16,7 @@ const generateAvatar = async (email) => {
     }
 }
 
-const registerUser = async ({email, password}) => {
+const registerUserServ = async ({email, password}) => {
 
     try {
         const encryptedPassword = await bcrypt.hash(password, 10);
@@ -30,7 +30,7 @@ const registerUser = async ({email, password}) => {
     }
 }
 
-const findValidUser = async (email, password) => {
+const findValidUserServ = async (email, password) => {
     try {
         const searchUserResult = await User.findOne({email: email});
 
@@ -58,6 +58,6 @@ const findValidUser = async (email, password) => {
 }
 
 module.exports = {
-    registerUser,
-    findValidUser,
+    registerUserServ,
+    findValidUserServ,
 }
