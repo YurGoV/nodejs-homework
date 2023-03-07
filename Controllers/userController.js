@@ -104,10 +104,21 @@ const uploadAvatarContr = async (req, res, next) => {
     }
 };
 
+const verifyUserContr = async (req, res, next) => {
+
+    console.log('req.params.verificationToken', req.params.verificationToken);
+
+    // todo: search user
+    // todo
+
+    res.status(500).json({"message": "test"})
+}
+
 module.exports = {
     createUserContr,
     loginUserContr,
     logoutUserContr,
     getCurrentUserContr,
     uploadAvatarContr,
+    verifyUserContr,
 }

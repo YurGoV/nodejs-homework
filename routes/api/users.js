@@ -5,7 +5,8 @@ const {
     loginUserContr,
     logoutUserContr,
     getCurrentUserContr,
-    uploadAvatarContr
+    uploadAvatarContr,
+    verifyUserContr,
 } = require('../../Controllers');
 
 
@@ -23,5 +24,6 @@ router.get('/current', authMwr, getCurrentUserContr);
 router.patch('/avatars',
     [authMwr, uploadAvatarMwr.single('avatar')],
     uploadAvatarContr);
+router.get('/verify/:verificationToken', verifyUserContr)// todo: validation middleware?
 
 module.exports = router;
