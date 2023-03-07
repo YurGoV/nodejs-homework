@@ -48,8 +48,12 @@ const loginUserContr = async (req, res, next) => {
                 "message": "Email or password is wrong"
             })
         }
-
-        return res.status(200).json(searchUserResult)
+        if (searchUserResult.user.verify) {
+            return res.status(200).json(searchUserResult)
+        }
+        return res.status(401).json({
+            "message": "Please verify you email"
+        })
 
     } catch (err) {
         res.status(500).json(err.message)

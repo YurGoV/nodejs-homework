@@ -40,7 +40,6 @@ const generateAvatar = async (email) => {
 };
 
 
-
 const registerUserServ = async ({email, password}) => {
 
     try {
@@ -74,15 +73,18 @@ const findValidUserServ = async (email, password) => {
         if (!searchUserResult) {
             return null;
         }
-        const isPassportValid = await bcrypt.compare(password, searchUserResult.password);
+        const isPassportValid = await bcrypt.compare(password, searchUserResult.password);// todo: destructurization
         if (!isPassportValid) {
             return null;
         }
+        console.log('searchUserResult in services/users :', searchUserResult);// todo: delete
 
-        const payload = {email: email, subscription: searchUserResult.subscription}
+        const payload = {email: email, subscription: searchUserResult.subscription, verify: searchUserResult.verify}// todo: destructurization
         const token = jwt.sign(payload, JWT_SECRET);
 
-        await User.findOneAndUpdate({email: email}, {token: token})
+        if (searchUserResult.verify) {
+            await User.findOneAndUpdate({email: email}, {token: token})
+        }
 
         return {
             "token": token,
