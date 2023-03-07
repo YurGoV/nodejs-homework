@@ -11,7 +11,8 @@ const AVATAR_CONST_DIR = path.resolve(AVATAR_CONST_DIR_ENV)
 
 const {
     registerUserServ,
-    findValidUserServ
+    findValidUserServ,
+    verifyUserServ,
 } = require('../Services');
 const {User} = require("../db/usersModel");
 
@@ -94,7 +95,7 @@ const uploadAvatarContr = async (req, res, next) => {
 
         await fs.unlink(avatarTempUrl);
 
-        await User.findOneAndUpdate({email: user}, {avatarURL: avatarDownloadUrl})
+        await User.findOneAndUpdate({email: user}, {avatarURL: avatarDownloadUrl})// todo: to service???
 
         return res.status(200).json({
             "avatarURL": avatarConstUrl
@@ -106,10 +107,21 @@ const uploadAvatarContr = async (req, res, next) => {
 
 const verifyUserContr = async (req, res, next) => {
 
-    console.log('req.params.verificationToken', req.params.verificationToken);
+    const {verificationToken} = req.params;
+    console.log('user Controller verificationToken', verificationToken);// todo: delete
 
-    // todo: search user
-    // todo
+    const verifyTokenResult = await verifyUserServ(verificationToken);
+    if (verifyTokenResult.statusCode === 200) {
+        return res.status(200).json({
+            message: 'Verification successful',
+        })
+    } else if (verifyTokenResult.statusCode === 404) {
+        return res.status(404).json({
+            message: 'User not found'
+        })
+    }
+
+    console.log('userController verifyTokenResult', verifyTokenResult);// todo: delete
 
     res.status(500).json({"message": "test"})
 }

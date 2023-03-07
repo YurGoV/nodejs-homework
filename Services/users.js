@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const gravatar = require('gravatar');
-const { v4: uuidv4 } = require('uuid');
+const {v4: uuidv4} = require('uuid');
 
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -19,12 +19,9 @@ const generateAvatar = async (email) => {
 
 const registerUserServ = async ({email, password}) => {
 
-    try {// todo: there put verification code generator & remove VC from http request
-
+    try {
         const encryptedPassword = await bcrypt.hash(password, 10);
         const verificationToken = uuidv4();
-        console.log('verificationToken', verificationToken);// todo: delete
-
 
         const gravatarUrl = await generateAvatar(email);
 
@@ -65,9 +62,32 @@ const findValidUserServ = async (email, password) => {
     } catch (err) {
         console.log(err.message);
     }
-}
+};
+
+const verifyUserServ = async (verificationToken) => {
+    try {
+        const searchTokenResult = await User.findOne({verificationToken: verificationToken});
+
+        if (searchTokenResult) {
+            const email = await searchTokenResult.email;
+            await User.findOneAndUpdate({email: email}, {verificationToken: null, verify: true})
+
+            return {
+                statusCode: 200
+            };
+        }
+
+        return {
+            statusCode: 404
+        };
+
+    } catch (err) {
+        console.log(err.message);
+    }
+};
 
 module.exports = {
     registerUserServ,
     findValidUserServ,
+    verifyUserServ,
 }
