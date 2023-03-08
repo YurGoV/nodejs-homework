@@ -118,8 +118,35 @@ const verifyUserServ = async (verificationToken) => {
     }
 };
 
+const sendVerifyMailServ = async (email) => {
+    try {
+        console.log('email in Services/users', email);// todo: delete
+        const searchUserResult = await User.findOne({email: email});
+        console.log('searchUserResult in Services/users', searchUserResult);// todo: delete
+        if (!searchUserResult) {
+            return {
+                statusCode: 404
+            }
+        }
+        if (searchUserResult.verify) {
+            return {
+                statusCode: 400
+            }
+        }
+
+        const {verificationToken} = searchUserResult;
+        await sendMail(email, verificationToken);
+        return {
+            statusCode: 200
+        }
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
 module.exports = {
     registerUserServ,
     findValidUserServ,
     verifyUserServ,
+    sendVerifyMailServ,
 }

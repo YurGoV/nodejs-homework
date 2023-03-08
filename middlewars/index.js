@@ -1,17 +1,21 @@
 const {authMwr} = require('./authMwr');
 const {
-    addPostValidationMwr,
-    updatePostValidationMwr,
-    updateFavoriteValidationMwr,
+    addPostValidateMwr,
+    updatePostValidateMwr,
+    updateFavoriteValidateMwr,
 } = require('./postsValitationMwr');
 const {uploadAvatarMwr} = require('./uploadAvatarMwr');
-const {authUserValidationMwr} = require('./usersValidationMwr');
+const {authUserValidateMwr} = require('./usersValidationMwr');
+const {repeatedVerifyMwr} = require('./repeatedVerifyMwr');
+const {verificationTokenValidateMwr} = require('./verificationTokenValidateMwr')
 
 module.exports = {
     authMwr,
-    addPostValidationMwr,
-    updatePostValidationMwr,
-    updateFavoriteValidationMwr,
+    addPostValidateMwr,
+    updatePostValidateMwr,
+    updateFavoriteValidateMwr,
     uploadAvatarMwr,
-    authUserValidationMwr,
+    authUserValidateMwr,
+    repeatedVerifyMwr,
+    verificationTokenValidateMwr,
 }

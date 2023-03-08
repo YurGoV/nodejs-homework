@@ -8,10 +8,12 @@ const phone = Joi.string()
     .pattern(/^[+0-9]{13}$/);
 const password = Joi.string()
     .pattern(/^[a-zA-Z0-9.;,/.;'`)(*&^%$#@!~]{3,30}$/);
+const verificationToken = Joi.string().guid({version: 'uuidv4'});
 
 module.exports = {
     name,
     email,
     phone,
     password,
+    verificationToken,
 }

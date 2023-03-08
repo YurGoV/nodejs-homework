@@ -13,6 +13,7 @@ const {
     registerUserServ,
     findValidUserServ,
     verifyUserServ,
+    sendVerifyMailServ,
 } = require('../Services');
 const {User} = require("../db/usersModel");
 
@@ -113,7 +114,6 @@ const uploadAvatarContr = async (req, res, next) => {
 const verifyUserContr = async (req, res, next) => {
 
     const {verificationToken} = req.params;
-    // console.log('user Controller verificationToken', verificationToken);// todo: delete
 
     const verifyTokenResult = await verifyUserServ(verificationToken);
     if (verifyTokenResult.statusCode === 200) {
@@ -126,9 +126,30 @@ const verifyUserContr = async (req, res, next) => {
         })
     }
 
-    // console.log('userController verifyTokenResult', verifyTokenResult);// todo: delete
-
     res.status(500).json({"message": "test"})
+}
+
+const repeatedVerifyUserContr = async (req, res, next) => {
+
+    const {email} = req.body;
+
+    const repeatedMailSend = await sendVerifyMailServ(email);
+
+    if (repeatedMailSend.statusCode === 404) {
+        return res.status(404).json({
+            message: 'User not found'
+        })
+    }
+    if (repeatedMailSend.statusCode === 400) {
+        return res.status(400).json({
+            message: 'Verification has already been passed'
+        })
+    }
+    if (repeatedMailSend.statusCode === 200) {
+        return res.status(200).json({
+            message: 'Verification email sent'
+        })
+    }
 }
 
 module.exports = {
@@ -138,4 +159,5 @@ module.exports = {
     getCurrentUserContr,
     uploadAvatarContr,
     verifyUserContr,
-}
+    repeatedVerifyUserContr,
+};

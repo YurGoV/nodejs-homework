@@ -2,6 +2,7 @@ const {
     registerUserServ,
     findValidUserServ,
     verifyUserServ,
+    sendVerifyMailServ,
 } = require('./users');
 
 const {
@@ -25,4 +26,5 @@ module.exports = {
     updateFavoriteServ,
     countContactsServ,
     verifyUserServ,
+    sendVerifyMailServ,
 };
