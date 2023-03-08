@@ -8,10 +8,9 @@ const sgMail = require('@sendgrid/mail');
 
 const sendMail = async (email, verificationToken) => {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY)
-    console.log('process.env.SENDGRID_API_KEY', process.env.SENDGRID_API_KEY);// todo: delete
     const msg = {
-        to: email, // Change to your recipient
-        from: 'yurgov@gmail.com', // Change to your verified sender
+        to: email,
+        from: 'yurgov@gmail.com',
         subject: 'Sending with SendGrid is Fun',
         text: 'please open in browser, that support html messages view',
         html: '<h3>Please complete registration: confirm you email </h3>' +
@@ -55,8 +54,6 @@ const registerUserServ = async ({email, password}) => {
             verificationToken: verificationToken,
         });
 
-        console.log('email, verificationToken', email, verificationToken);// todo: delete
-
         await sendMail(email, verificationToken);
 
         return createdUser;
@@ -69,6 +66,7 @@ const registerUserServ = async ({email, password}) => {
 const findValidUserServ = async (email, password) => {
     try {
         const searchUserResult = await User.findOne({email: email});
+        const {subscription, verify} = searchUserResult;
 
         if (!searchUserResult) {
             return null;
@@ -77,12 +75,11 @@ const findValidUserServ = async (email, password) => {
         if (!isPassportValid) {
             return null;
         }
-        console.log('searchUserResult in services/users :', searchUserResult);// todo: delete
 
-        const payload = {email: email, subscription: searchUserResult.subscription, verify: searchUserResult.verify}// todo: destructurization
+        const payload = {email: email, subscription: subscription, verify: verify}// todo: destructurization
         const token = jwt.sign(payload, JWT_SECRET);
 
-        if (searchUserResult.verify) {
+        if (verify) {// todo: destructurization
             await User.findOneAndUpdate({email: email}, {token: token})
         }
 
@@ -120,9 +117,7 @@ const verifyUserServ = async (verificationToken) => {
 
 const sendVerifyMailServ = async (email) => {
     try {
-        console.log('email in Services/users', email);// todo: delete
         const searchUserResult = await User.findOne({email: email});
-        console.log('searchUserResult in Services/users', searchUserResult);// todo: delete
         if (!searchUserResult) {
             return {
                 statusCode: 404

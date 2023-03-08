@@ -101,7 +101,7 @@ const uploadAvatarContr = async (req, res, next) => {
 
         await fs.unlink(avatarTempUrl);
 
-        await User.findOneAndUpdate({email: user}, {avatarURL: avatarDownloadUrl})// todo: to service???
+        await User.findOneAndUpdate({email: user}, {avatarURL: avatarDownloadUrl});
 
         return res.status(200).json({
             "avatarURL": avatarConstUrl
