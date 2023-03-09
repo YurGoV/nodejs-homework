@@ -6,7 +6,7 @@ const countContactsServ = async (owner, favoriteArr) => {
     } catch (err) {
         return err.message;
     }
-}
+};
 
 const listContactsServ = async (owner, favoriteArr, {skip, limit}) => {
     try {
@@ -18,7 +18,7 @@ const listContactsServ = async (owner, favoriteArr, {skip, limit}) => {
     } catch (err) {
         return err.message;
     }
-}
+};
 
 const listContactByIdServ = async (contactId, owner) => {
     try {
@@ -27,7 +27,7 @@ const listContactByIdServ = async (contactId, owner) => {
     } catch (err) {
         return err.message;
     }
-}
+};
 
 const postContactServ = async (body) => {
     try {
@@ -35,7 +35,7 @@ const postContactServ = async (body) => {
     } catch (err) {
         return err.message;
     }
-}
+};
 
 const removeContactServ = async (contactId, owner) => {
     try {
@@ -47,7 +47,7 @@ const removeContactServ = async (contactId, owner) => {
     } catch (err) {
         return err.message;
     }
-}
+};
 
 const updateContactServ = async (contactId, owner, body) => {
     try {
@@ -55,7 +55,7 @@ const updateContactServ = async (contactId, owner, body) => {
     } catch (err) {
         return err.message;
     }
-}
+};
 
 const updateFavoriteServ = async (contactId, owner, body) => {
     try {
@@ -63,7 +63,7 @@ const updateFavoriteServ = async (contactId, owner, body) => {
     } catch (err) {
         return err.message;
     }
-}
+};
 
 
 module.exports = {
@@ -74,4 +74,4 @@ module.exports = {
     updateContactServ,
     updateFavoriteServ,
     countContactsServ,
-}
+};

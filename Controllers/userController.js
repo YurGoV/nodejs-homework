@@ -11,7 +11,9 @@ const AVATAR_CONST_DIR = path.resolve(AVATAR_CONST_DIR_ENV)
 
 const {
     registerUserServ,
-    findValidUserServ
+    findValidUserServ,
+    verifyUserServ,
+    sendVerifyMailServ,
 } = require('../Services');
 const {User} = require("../db/usersModel");
 
@@ -19,6 +21,7 @@ const {User} = require("../db/usersModel");
 const createUserContr = async (req, res, next) => {
     try {
         const userData = req.body;
+
         const createdUser = await registerUserServ(userData);
 
         res.status(201).json({
@@ -46,8 +49,12 @@ const loginUserContr = async (req, res, next) => {
                 "message": "Email or password is wrong"
             })
         }
-
-        return res.status(200).json(searchUserResult)
+        if (searchUserResult.user.verify) {
+            return res.status(200).json(searchUserResult)
+        }
+        return res.status(401).json({
+            "message": "Please verify you email"
+        })
 
     } catch (err) {
         res.status(500).json(err.message)
@@ -94,7 +101,7 @@ const uploadAvatarContr = async (req, res, next) => {
 
         await fs.unlink(avatarTempUrl);
 
-        await User.findOneAndUpdate({email: user}, {avatarURL: avatarDownloadUrl})
+        await User.findOneAndUpdate({email: user}, {avatarURL: avatarDownloadUrl});
 
         return res.status(200).json({
             "avatarURL": avatarConstUrl
@@ -104,10 +111,53 @@ const uploadAvatarContr = async (req, res, next) => {
     }
 };
 
+const verifyUserContr = async (req, res, next) => {
+
+    const {verificationToken} = req.params;
+
+    const verifyTokenResult = await verifyUserServ(verificationToken);
+    if (verifyTokenResult.statusCode === 200) {
+        return res.status(200).json({
+            message: 'Verification successful',
+        })
+    } else if (verifyTokenResult.statusCode === 404) {
+        return res.status(404).json({
+            message: 'User not found'
+        })
+    }
+
+    res.status(500).json({"message": "test"})
+}
+
+const repeatedVerifyUserContr = async (req, res, next) => {
+
+    const {email} = req.body;
+
+    const repeatedMailSend = await sendVerifyMailServ(email);
+
+    if (repeatedMailSend.statusCode === 404) {
+        return res.status(404).json({
+            message: 'User not found'
+        })
+    }
+    if (repeatedMailSend.statusCode === 400) {
+        return res.status(400).json({
+            message: 'Verification has already been passed'
+        })
+    }
+    if (repeatedMailSend.statusCode === 200) {
+        return res.status(200).json({
+            message: 'Verification email sent'
+        })
+    }
+}
+
 module.exports = {
     createUserContr,
     loginUserContr,
     logoutUserContr,
     getCurrentUserContr,
     uploadAvatarContr,
-}
+    verifyUserContr,
+    repeatedVerifyUserContr,
+};

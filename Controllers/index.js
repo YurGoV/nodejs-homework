@@ -13,6 +13,8 @@ const {
     logoutUserContr,
     getCurrentUserContr,
     uploadAvatarContr,
+    verifyUserContr,
+    repeatedVerifyUserContr,
 } = require('./userController');
 
 module.exports = {
@@ -27,4 +29,6 @@ module.exports = {
     logoutUserContr,
     getCurrentUserContr,
     uploadAvatarContr,
+    verifyUserContr,
+    repeatedVerifyUserContr,
 }

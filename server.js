@@ -2,7 +2,6 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const app = require('./app')
 
-
 const PORT = process.env.PORT;
 const MONGO_URL = process.env.MONGO_URL;
 
@@ -11,7 +10,6 @@ const connectMongo = async () => {
     mongoose.set("strictQuery", false);
     return mongoose.connect(MONGO_URL);
 };
-
 
 const start = async () => {
     await connectMongo();
